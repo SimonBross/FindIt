@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:id="@+id/menu_top"
+           android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_working_student"
+                android:icon="@drawable/ic_laptop_black_24dp"
+                android:title="Werkstudententätigkeit"/>
+        <item
+                android:id="@+id/nav_internship"
+                android:icon="@drawable/ic_location_city_black_24dp"
+                android:title="Praktikum"/>
+        <item
+                android:id="@+id/nav_thesis"
+                android:icon="@drawable/ic_school_black_24dp"
+                android:title="Thesis"/>
+    </group>
+
+    <group android:id="@+id/menu_bottom"
+           android:checkableBehavior="none">
+        <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="Einstellungen"/>
+    </group>
+</menu>
