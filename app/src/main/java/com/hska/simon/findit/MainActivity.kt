@@ -1,13 +1,17 @@
 package com.hska.simon.findit
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -18,9 +22,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        addbtn.setOnClickListener { view ->
+            val intent = Intent(this, AddActivity::class.java)
+            startActivity(intent)
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -60,10 +64,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_working_student -> {
-                // Handle the action
+                var arrayAdapter= ArrayAdapter<String>(this, android.R.layout.simple_list_item_1)
+                arrayAdapter.add("Werkstudentenstelle")
+                arrayAdapter.add("Werkstudentenstelle")
+                arrayAdapter.add("Werkstudentenstelle")
+                arrayAdapter.add("Werkstudentenstelle")
+                arrayAdapter.add("Werkstudentenstelle")
+
+                val listView = findViewById<ListView>(R.id.offerlist)
+                listView.setAdapter(arrayAdapter)
             }
             R.id.nav_internship -> {
+                var arrayAdapter= ArrayAdapter<String>(this, android.R.layout.simple_list_item_1)
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
+                arrayAdapter.add("Praktikum")
 
+                val listView = findViewById<ListView>(R.id.offerlist)
+                listView.setAdapter(arrayAdapter)
             }
             R.id.nav_thesis -> {
 

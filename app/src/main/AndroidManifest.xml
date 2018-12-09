@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".WorkingStudentActivity"
-                android:label="@string/title_activity_working_student"
+                android:name=".AddActivity"
+                android:label="@string/title_activity_add"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
