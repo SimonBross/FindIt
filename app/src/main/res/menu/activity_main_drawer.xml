@@ -8,7 +8,8 @@
         <item
                 android:id="@+id/nav_working_student"
                 android:icon="@drawable/ic_laptop_black_24dp"
-                android:title="Werkstudententätigkeit"/>
+                android:title="Werkstudententätigkeit"
+                android:checked="true"/>
         <item
                 android:id="@+id/nav_internship"
                 android:icon="@drawable/ic_location_city_black_24dp"
