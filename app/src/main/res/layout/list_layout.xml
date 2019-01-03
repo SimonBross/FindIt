@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/listTextView"
+              android:layout_width="308dp"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceListItemSmall"
+              android:gravity="center_vertical"
+              android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+              android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+              android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+
+    <ToggleButton
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/myToggleButton"
+            app:layout_constraintStart_toEndOf="@id/listTextView"
+            android:textOn="Favorit"
+            android:textOff="Kein Favorit"
+            android:layout_alignParentTop="true"/>
+
+</RelativeLayout>

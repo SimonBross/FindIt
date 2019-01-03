@@ -12,18 +12,17 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import com.hska.simon.findit.database.DataAccessHelper
 import com.hska.simon.findit.model.Job
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
     var arrayAdapter:ArrayAdapter<Job>? = null
+    var toggle:ToggleButton? = null
     private var dataAccessHelper: DataAccessHelper? = null
     private var jobs:List<Job>? = null
 
@@ -71,10 +70,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    override fun onCheckedChanged(compountButton:CompoundButton, b:Boolean) {
+        if(b)
+            Toast.makeText(getApplicationContext(), "checked", Toast.LENGTH_LONG).show()
+        else
+            Toast.makeText(getApplicationContext(), "unchecked", Toast.LENGTH_LONG).show()
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_working_student -> {
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
+                arrayAdapter = ArrayAdapter<Job>(this, R.layout.list_layout, R.id.listTextView)
                 val listView = findViewById<ListView>(R.id.offerlist)
                 listView.setAdapter(arrayAdapter)
 
@@ -85,6 +91,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     arrayAdapter?.addAll(jobs)
                     arrayAdapter?.notifyDataSetChanged()
                 }
+
+                toggle = findViewById(R.id.myToggleButton)
+                toggle!!.setOnCheckedChangeListener(this)
             }
             R.id.nav_internship -> {
                 arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
