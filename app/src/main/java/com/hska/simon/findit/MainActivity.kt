@@ -19,10 +19,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
     var arrayAdapter:ArrayAdapter<Job>? = null
-    var toggle:ToggleButton? = null
     private var dataAccessHelper: DataAccessHelper? = null
     private var jobs:List<Job>? = null
 
@@ -70,19 +69,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onCheckedChanged(compountButton:CompoundButton, b:Boolean) {
-        if(b)
-            Toast.makeText(getApplicationContext(), "checked", Toast.LENGTH_LONG).show()
-        else
-            Toast.makeText(getApplicationContext(), "unchecked", Toast.LENGTH_LONG).show()
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_working_student -> {
-                arrayAdapter = ArrayAdapter<Job>(this, R.layout.list_layout, R.id.listTextView)
-                val listView = findViewById<ListView>(R.id.offerlist)
-                listView.setAdapter(arrayAdapter)
 
                 dataAccessHelper = DataAccessHelper(this)
                 jobs = ArrayList()
@@ -92,13 +81,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     arrayAdapter?.notifyDataSetChanged()
                 }
 
-                toggle = findViewById(R.id.myToggleButton)
-                toggle!!.setOnCheckedChangeListener(this)
-            }
-            R.id.nav_internship -> {
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
+                arrayAdapter = CustomArrayAdapter(this, jobs)
                 val listView = findViewById<ListView>(R.id.offerlist)
                 listView.setAdapter(arrayAdapter)
+            }
+            R.id.nav_internship -> {
 
                 dataAccessHelper = DataAccessHelper(this)
                 jobs = ArrayList()
@@ -107,11 +94,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     arrayAdapter?.addAll(jobs)
                     arrayAdapter?.notifyDataSetChanged()
                 }
-            }
-            R.id.nav_thesis -> {
-                arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
+
+                arrayAdapter = CustomArrayAdapter(this, jobs)
                 val listView = findViewById<ListView>(R.id.offerlist)
                 listView.setAdapter(arrayAdapter)
+            }
+            R.id.nav_thesis -> {
 
                 dataAccessHelper = DataAccessHelper(this)
                 jobs = ArrayList()
@@ -120,6 +108,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     arrayAdapter?.addAll(jobs)
                     arrayAdapter?.notifyDataSetChanged()
                 }
+
+                arrayAdapter = CustomArrayAdapter(this, jobs)
+                val listView = findViewById<ListView>(R.id.offerlist)
+                listView.setAdapter(arrayAdapter)
             }
             R.id.nav_settings -> {
 

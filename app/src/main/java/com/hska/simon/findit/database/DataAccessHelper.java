@@ -60,6 +60,19 @@ public class DataAccessHelper extends SQLiteOpenHelper{
         public static final String COLUMN_NAME_ISFAVORITE = "isfavorite";
     }
 
+    public void changeIsfavorite(Job job, int newValue){
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME_ISFAVORITE, newValue);
+        String selection = COLUMN_NAME_ID + " = ?";
+        String[] selectionArgs = { job.getId() + "" };
+
+        db.update(TABLE_NAME, values, selection, selectionArgs);
+
+        //"UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_ISFAVORITE + " = " + newValue + " WHERE " + COLUMN_NAME_ID + " = " + job.getId();
+    }
+
     public void addJob (Job job){
         ContentValues values = new ContentValues();
         //values.put(COLUMN_NAME_ID, job.getId());

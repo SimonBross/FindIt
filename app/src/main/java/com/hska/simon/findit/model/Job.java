@@ -1,5 +1,9 @@
 package com.hska.simon.findit.model;
 
+import android.app.Activity;
+import com.hska.simon.findit.database.DataAccessHelper;
+import android.content.Context;
+
 public class Job {
 
     private int id;
