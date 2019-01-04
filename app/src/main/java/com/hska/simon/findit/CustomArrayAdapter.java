@@ -3,6 +3,7 @@ package com.hska.simon.findit;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view = null;
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
@@ -58,6 +59,19 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
         }
         ViewHolder holder = (ViewHolder) view.getTag();
         holder.text.setText(jobs.get(position).toString());
+        holder.text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                Intent mapsIntent = new Intent(context, MapsActivity.class);
+                mapsIntent.putExtra("company", jobs.get(position).getCompany());
+                context.startActivity(mapsIntent);
+//                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//                shareIntent.putExtra(Intent.EXTRA_TEXT, jobs.get(position).toString());
+//                shareIntent.setType("text/plain");
+//                context.startActivity(shareIntent);
+//                return true;
+            }
+        });
         if(jobs.get(position).getIsfavorite() == 0)
             holder.toggleButton.setChecked(false);
         else if(jobs.get(position).getIsfavorite() == 1)

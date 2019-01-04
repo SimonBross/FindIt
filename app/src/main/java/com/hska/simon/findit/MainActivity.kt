@@ -83,6 +83,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         listView.setAdapter(arrayAdapter)
     }
 
+//    @Override
+//    public boolean onLongClick (View v) {
+//        Intent mapsIntent = new Intent(context, MapsActivity.class);
+//        int listSize = getListSize(jobs);
+//        for(int i = 0; i < listSize; i++){
+//            mapsIntent.putExtra(jobs[i].getId() + "", jobs[i].getCompany());
+//        }
+//        context.startActivity(mapsIntent);
+//        return true;
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_favorites -> {
