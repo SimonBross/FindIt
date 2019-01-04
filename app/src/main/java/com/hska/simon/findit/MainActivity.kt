@@ -3,13 +3,10 @@ package com.hska.simon.findit
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -17,7 +14,6 @@ import com.hska.simon.findit.database.DataAccessHelper
 import com.hska.simon.findit.model.Job
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
 
@@ -32,7 +28,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         addbtn.setOnClickListener { view ->
             val intent = Intent(this, AddActivity::class.java)
-            startActivityForResult(intent, 1)
+            startActivity(intent)
+//            startActivityForResult(intent, 1)
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -42,7 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
+        loadDataFromDatabase(99)
     }
 
     override fun onBackPressed() {
@@ -69,49 +66,36 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    fun loadDataFromDatabase(jobType: Int){
+        dataAccessHelper = DataAccessHelper(this)
+        jobs = ArrayList()
+        if(jobType == 99)
+            jobs = dataAccessHelper?.getAllFavorites()
+        else
+            jobs = dataAccessHelper?.getAllJobs(jobType)
+        if(jobs?.size != 0){
+            arrayAdapter?.addAll(jobs)
+            arrayAdapter?.notifyDataSetChanged()
+        }
+
+        arrayAdapter = CustomArrayAdapter(this, jobs)
+        val listView = findViewById<ListView>(R.id.offerlist)
+        listView.setAdapter(arrayAdapter)
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.nav_favorites -> {
+                loadDataFromDatabase(99)
+            }
             R.id.nav_working_student -> {
-
-                dataAccessHelper = DataAccessHelper(this)
-                jobs = ArrayList()
-                jobs = dataAccessHelper?.getAllWorkingStudent()
-                if(jobs?.size != 0){
-                    arrayAdapter?.addAll(jobs)
-                    arrayAdapter?.notifyDataSetChanged()
-                }
-
-                arrayAdapter = CustomArrayAdapter(this, jobs)
-                val listView = findViewById<ListView>(R.id.offerlist)
-                listView.setAdapter(arrayAdapter)
+                loadDataFromDatabase(0)
             }
             R.id.nav_internship -> {
-
-                dataAccessHelper = DataAccessHelper(this)
-                jobs = ArrayList()
-                jobs = dataAccessHelper?.getAllInternship()
-                if(jobs?.size != 0){
-                    arrayAdapter?.addAll(jobs)
-                    arrayAdapter?.notifyDataSetChanged()
-                }
-
-                arrayAdapter = CustomArrayAdapter(this, jobs)
-                val listView = findViewById<ListView>(R.id.offerlist)
-                listView.setAdapter(arrayAdapter)
+                loadDataFromDatabase(1)
             }
             R.id.nav_thesis -> {
-
-                dataAccessHelper = DataAccessHelper(this)
-                jobs = ArrayList()
-                jobs = dataAccessHelper?.getAllThesis()
-                if(jobs?.size != 0){
-                    arrayAdapter?.addAll(jobs)
-                    arrayAdapter?.notifyDataSetChanged()
-                }
-
-                arrayAdapter = CustomArrayAdapter(this, jobs)
-                val listView = findViewById<ListView>(R.id.offerlist)
-                listView.setAdapter(arrayAdapter)
+                loadDataFromDatabase(2)
             }
             R.id.nav_settings -> {
 
@@ -122,22 +106,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    override fun onActivityResult(requestCode:Int, resultCode:Int, data:Intent?){
-
-        if(requestCode == 1){
-            if(resultCode == Activity.RESULT_OK){
-                var job = Job()
-                //job.id = data!!.getExtras().getInt("id")
-                job.type = data!!.getExtras().getInt("type")
-                job.company = data.getExtras().getString("company")
-                job.position = data.getExtras().getString("position")
-                job.description = data.getExtras().getString("description")
-                job.isfavorite = data.getExtras().getInt("isfavorite")
-                arrayAdapter?.add(job)
-                Toast.makeText(getApplicationContext(), "Gespeichert", Toast.LENGTH_LONG).show()
-
-            }
-        }
-
-    }
+//    override fun onActivityResult(requestCode:Int, resultCode:Int, data:Intent?){
+//
+//        if(requestCode == 1){
+//            if(resultCode == Activity.RESULT_OK){
+//                var job = Job()
+//                job.type = data!!.getExtras().getInt("type")
+//                job.company = data.getExtras().getString("company")
+//                job.position = data.getExtras().getString("position")
+//                job.description = data.getExtras().getString("description")
+//                job.isfavorite = data.getExtras().getInt("isfavorite")
+//                arrayAdapter?.add(job)
+//                Toast.makeText(getApplicationContext(), "Gespeichert", Toast.LENGTH_LONG).show()
+//                loadDataFromDatabase(0)
+//            }
+//        }
+//    }
 }

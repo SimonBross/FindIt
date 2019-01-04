@@ -6,10 +6,18 @@
     <group android:id="@+id/menu_top"
            android:checkableBehavior="single">
         <item
+                android:id="@+id/nav_favorites"
+                android:icon="@drawable/ic_star_black_24dp"
+                android:title="Favoriten"
+                android:checked="true"/>
+    </group>
+
+    <group android:id="@+id/menu_middle"
+           android:checkableBehavior="single">
+        <item
                 android:id="@+id/nav_working_student"
                 android:icon="@drawable/ic_laptop_black_24dp"
-                android:title="Werkstudententätigkeit"
-                android:checked="true"/>
+                android:title="Werkstudententätigkeit"/>
         <item
                 android:id="@+id/nav_internship"
                 android:icon="@drawable/ic_location_city_black_24dp"

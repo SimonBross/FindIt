@@ -108,7 +108,7 @@ public class DataAccessHelper extends SQLiteOpenHelper{
         return allJobs;
     }
 
-    public List<Job> getAllWorkingStudent(){
+    public List<Job> getAllJobs(int jobType){
         List<Job> wsJobs = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
@@ -117,13 +117,13 @@ public class DataAccessHelper extends SQLiteOpenHelper{
             if (cursor.moveToFirst()){
                 do {
                     int type = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_TYPE));
-                    if(type == 0) {
+                    if(type == jobType) {
                         int id = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID));
                         String company = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_COMPANY));
                         String position = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_POSITION));
                         String description = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION));
                         int isfavorite = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ISFAVORITE));
-                        Log.i("---Datenbankeinträge---", id + type + company + position + description);
+                        Log.i("---Datenbankeinträge---", id + type + company + position + description + isfavorite);
                         wsJobs.add(new Job(id, type, company, position, description, isfavorite));
                     }
                 } while (cursor.moveToNext());
@@ -132,51 +132,26 @@ public class DataAccessHelper extends SQLiteOpenHelper{
         return wsJobs;
     }
 
-    public List<Job> getAllInternship(){
-        List<Job> internJobs = new ArrayList<>();
+    public List<Job> getAllFavorites(){
+        List<Job> wsJobs = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
 
         if (cursor != null){
             if (cursor.moveToFirst()){
                 do {
-                    int type = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_TYPE));
-                    if(type == 1) {
+                    int isfavorite = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ISFAVORITE));
+                    if(isfavorite == 1) {
                         int id = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID));
+                        int type = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_TYPE));
                         String company = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_COMPANY));
                         String position = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_POSITION));
                         String description = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION));
-                        int isfavorite = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ISFAVORITE));
-                        Log.i("---Datenbankeinträge---", id + type + company + position + description);
-                        internJobs.add(new Job(id, type, company, position, description, isfavorite));
+                        wsJobs.add(new Job(id, type, company, position, description, isfavorite));
                     }
                 } while (cursor.moveToNext());
             }
         }
-        return internJobs;
-    }
-
-    public List<Job> getAllThesis(){
-        List<Job> thesisJobs = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
-
-        if (cursor != null){
-            if (cursor.moveToFirst()){
-                do {
-                    int type = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_TYPE));
-                    if(type == 2) {
-                        int id = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ID));
-                        String company = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_COMPANY));
-                        String position = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_POSITION));
-                        String description = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION));
-                        int isfavorite = cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_ISFAVORITE));
-                        Log.i("---Datenbankeinträge---", id + type + company + position + description);
-                        thesisJobs.add(new Job(id, type, company, position, description, isfavorite));
-                    }
-                } while (cursor.moveToNext());
-            }
-        }
-        return thesisJobs;
+        return wsJobs;
     }
 }

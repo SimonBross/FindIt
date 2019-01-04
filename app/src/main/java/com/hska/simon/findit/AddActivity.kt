@@ -52,13 +52,13 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             dataAccessHelper?.addJob(Job(type, company, position, description, 0))
 
 
-            var returnIntent: Intent = Intent()
-            returnIntent.putExtra("type", spinner.getSelectedItemId().toInt())
-            returnIntent.putExtra("company", companyTextField.getText().toString())
-            returnIntent.putExtra("position", positionTextField.getText().toString())
-            returnIntent.putExtra("description", descriptionTextField.getText().toString())
-            returnIntent.putExtra("isfavorite", 0)
-            setResult(Activity.RESULT_OK, returnIntent)
+//            var returnIntent: Intent = Intent()
+//            returnIntent.putExtra("type", spinner.getSelectedItemId().toInt())
+//            returnIntent.putExtra("company", companyTextField.getText().toString())
+//            returnIntent.putExtra("position", positionTextField.getText().toString())
+//            returnIntent.putExtra("description", descriptionTextField.getText().toString())
+//            returnIntent.putExtra("isfavorite", 0)
+//            setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
 
