@@ -1,16 +1,11 @@
 package com.hska.simon.findit;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.*;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,7 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
+            if (extras == null) {
                 company = null;
             } else {
                 company = extras.getString("company");
@@ -107,17 +102,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Geocoder geocoder = new Geocoder(this);
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocationName(company,1);
+            addresses = geocoder.getFromLocationName(company, 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(addresses.size() > 0) {
+        if (addresses.size() > 0) {
             double latitude = addresses.get(0).getLatitude();
             double longitude = addresses.get(0).getLongitude();
             LatLng newLocation = new LatLng(latitude, longitude);
             mMap.addMarker(new MarkerOptions().position(newLocation).title(company));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "Address could not be found", Toast.LENGTH_LONG).show();
             finish();
         }

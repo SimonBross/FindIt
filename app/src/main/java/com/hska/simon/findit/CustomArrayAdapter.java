@@ -1,8 +1,8 @@
 package com.hska.simon.findit;
 
-import java.util.List;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.hska.simon.findit.database.DataAccessHelper;
 import com.hska.simon.findit.model.Job;
+
+import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<Job> {
 
@@ -41,7 +43,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     Job job = (Job) viewHolder.toggleButton.getTag();
-                    int isFavorite = buttonView.isChecked()?1:0;
+                    int isFavorite = buttonView.isChecked() ? 1 : 0;
                     job.setIsfavorite(isFavorite);
                     dataAccessHelper = new DataAccessHelper(context);
                     dataAccessHelper.changeIsfavorite(job, isFavorite);
@@ -49,7 +51,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
                     //    Toast.makeText(getContext(), "checked"+ job.getPosition(), Toast.LENGTH_LONG).show();
                     //else if(!isChecked)
                     //    Toast.makeText(getContext(), "unchecked"+ job.getPosition(), Toast.LENGTH_LONG).show();
-                    }
+                }
             });
             view.setTag(viewHolder);
             viewHolder.toggleButton.setTag(jobs.get(position));
@@ -61,7 +63,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
         holder.text.setText(jobs.get(position).toString());
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick (View v) {
+            public void onClick(View v) {
                 Intent mapsIntent = new Intent(context, MapsActivity.class);
                 mapsIntent.putExtra("company", jobs.get(position).getCompany());
                 context.startActivity(mapsIntent);
@@ -72,12 +74,44 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
 //                return true;
             }
         });
-        if(jobs.get(position).getIsfavorite() == 0)
+        holder.text.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog diaBox = AskOption(jobs.get(position));
+                diaBox.show();
+                return true;
+            }
+        });
+        if (jobs.get(position).getIsfavorite() == 0)
             holder.toggleButton.setChecked(false);
-        else if(jobs.get(position).getIsfavorite() == 1)
+        else if (jobs.get(position).getIsfavorite() == 1)
             holder.toggleButton.setChecked(true);
         else
             Toast.makeText(getContext(), "Custom Array Adapter IsFavorite problem", Toast.LENGTH_LONG).show();
         return view;
+    }
+
+
+    private AlertDialog AskOption(final Job job) {
+        AlertDialog myDeleteDialogBox = new AlertDialog.Builder(context)
+                //set message, title, and icon
+                .setTitle("Löschen")
+                .setMessage("Willst du diese Stellenanzeige wirklich löschen?")
+                .setIcon(R.drawable.ic_delete_black_24dp)
+
+                .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dataAccessHelper.deleteJob(job);
+                        dialog.dismiss();
+                    }
+
+                })
+                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        return myDeleteDialogBox;
     }
 }
