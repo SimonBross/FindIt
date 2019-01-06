@@ -1,9 +1,5 @@
 package com.hska.simon.findit.model;
 
-import android.app.Activity;
-import com.hska.simon.findit.database.DataAccessHelper;
-import android.content.Context;
-
 public class Job {
 
     private int id;
@@ -12,8 +8,9 @@ public class Job {
     private String position;
     private String description;
     private int isfavorite;
+    private String pdfbase64;
 
-    public Job(){
+    public Job() {
         super();
     }
 
@@ -61,7 +58,15 @@ public class Job {
         this.isfavorite = isfavorite;
     }
 
-    public Job(int id, int type, String company, String position, String description, int isfavorite){
+    public String getPdfbase64() {
+        return pdfbase64;
+    }
+
+    public void setPdfbase64(String pdfbase64) {
+        this.pdfbase64 = pdfbase64;
+    }
+
+    public Job(int id, int type, String company, String position, String description, int isfavorite) {
         this.id = id;
         this.type = type;
         this.company = company;
@@ -70,7 +75,17 @@ public class Job {
         this.isfavorite = isfavorite;
     }
 
-    public Job(int type, String company, String position, String description, int isfavorite){
+    public Job(int id, int type, String company, String position, String description, int isfavorite, String pdfbase64) {
+        this.id = id;
+        this.type = type;
+        this.company = company;
+        this.position = position;
+        this.description = description;
+        this.isfavorite = isfavorite;
+        this.pdfbase64 = pdfbase64;
+    }
+
+    public Job(int type, String company, String position, String description, int isfavorite) {
         this.type = type;
         this.company = company;
         this.position = position;
@@ -78,9 +93,18 @@ public class Job {
         this.isfavorite = isfavorite;
     }
 
+    public Job(int type, String company, String position, String description, int isfavorite, String pdfbase64) {
+        this.type = type;
+        this.company = company;
+        this.position = position;
+        this.description = description;
+        this.isfavorite = isfavorite;
+        this.pdfbase64 = pdfbase64;
+    }
+
 
     @Override
-    public String toString(){
-        return "ID:" + id + " TYPE:" + type + " COMPANY:" + company + "POSITION:" + position + " DESCRIPTION:" + description + " ISFAVORITE:" + isfavorite;
+    public String toString() {
+        return "<b>" + company + "</b><br>" + position + "<br>" + description;
     }
 }

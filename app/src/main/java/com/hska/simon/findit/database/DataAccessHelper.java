@@ -36,7 +36,9 @@ public class DataAccessHelper extends SQLiteOpenHelper {
             + COLUMN_NAME_DESCRIPTION
             + " TEXT, "
             + COLUMN_NAME_ISFAVORITE
-            + " INTEGER "
+            + " INTEGER, "
+            + COLUMN_NAME_PDFBASE64
+            + " TEXT "
             + ");";
 
     @Override
@@ -57,6 +59,7 @@ public class DataAccessHelper extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_POSITION = "position";
         public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_ISFAVORITE = "isfavorite";
+        public static final String COLUMN_NAME_PDFBASE64 = "pdfbase64";
     }
 
     public void changeIsfavorite(Job job, int newValue) {
@@ -80,6 +83,7 @@ public class DataAccessHelper extends SQLiteOpenHelper {
         values.put(COLUMN_NAME_POSITION, job.getPosition());
         values.put(COLUMN_NAME_DESCRIPTION, job.getDescription());
         values.put(COLUMN_NAME_ISFAVORITE, job.getIsfavorite());
+        values.put(COLUMN_NAME_PDFBASE64, job.getPdfbase64());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_NAME, null, values);
         db.close();

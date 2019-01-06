@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
             ((ViewHolder) view.getTag()).toggleButton.setTag(jobs.get(position));
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.text.setText(jobs.get(position).toString());
+        holder.text.setText(Html.fromHtml(jobs.get(position).toString()));
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
