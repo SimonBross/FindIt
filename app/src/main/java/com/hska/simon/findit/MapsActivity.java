@@ -113,7 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions().position(newLocation).title(company));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
         } else {
-            Toast.makeText(getApplicationContext(), "Address could not be found", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.address_not_found, Toast.LENGTH_LONG).show();
             finish();
         }
     }

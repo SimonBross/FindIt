@@ -2,8 +2,13 @@ package com.hska.simon.findit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,14 +80,27 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mapsIntent = new Intent(context, MapsActivity.class);
-                mapsIntent.putExtra("company", jobs.get(position).getCompany());
-                context.startActivity(mapsIntent);
+                if (isNetworkAvailable() == false) {
+                    Snackbar snackbar = Snackbar
+                            .make(v, "Internet connection is off", Snackbar.LENGTH_LONG)
+                            .setAction("Turn On", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent wirelessIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                                    context.startActivity(wirelessIntent);
+                                }
+                            });
+                    snackbar.show();
+                } else {
+                    Intent mapsIntent = new Intent(context, MapsActivity.class);
+                    mapsIntent.putExtra("company", jobs.get(position).getCompany());
+                    context.startActivity(mapsIntent);
 //                Intent shareIntent = new Intent(Intent.ACTION_SEND);
 //                shareIntent.putExtra(Intent.EXTRA_TEXT, jobs.get(position).toString());
 //                shareIntent.setType("text/plain");
 //                context.startActivity(shareIntent);
 //                return true;
+                }
             }
         });
         holder.text.setOnLongClickListener(new View.OnLongClickListener() {
@@ -123,5 +141,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
                 })
                 .create();
         return myDeleteDialogBox;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 }
