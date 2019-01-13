@@ -1,16 +1,19 @@
 package com.hska.simon.findit
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.SearchView
+import android.widget.Toast
 import com.hska.simon.findit.database.DataAccessHelper
 import com.hska.simon.findit.model.Job
 import kotlinx.android.synthetic.main.activity_main.*
@@ -64,11 +67,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
                 loadDataFromDatabase(newText)
+                if(jobs?.size == 0){
+                    var arrayAdapterEmpty= ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1)
+                    arrayAdapterEmpty.add("Keine Stellen gefunden")
+                    val listView: ListView = findViewById(R.id.offerlist)
+                    listView.setAdapter(arrayAdapterEmpty)
+                }
                 return false
             }
 
             override fun onQueryTextSubmit(p0: String): Boolean {
-                loadDataFromDatabase(p0)
                 return true
             }
         })
