@@ -8,7 +8,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import com.hska.simon.findit.database.DataAccessHelper;
 import com.hska.simon.findit.model.Job;
 
@@ -28,7 +30,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
 
     static class ViewHolder {
         protected TextView text;
-        protected ToggleButton toggleButton;
+        protected ImageButton imageButton;
     }
 
     @Override
@@ -39,15 +41,23 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
             view = inflater.inflate(R.layout.list_layout, null);
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.text = view.findViewById(R.id.listTextView);
-            viewHolder.toggleButton = view.findViewById(R.id.myToggleButton);
-            viewHolder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            viewHolder.imageButton = view.findViewById(R.id.myImageButton);
+            viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Job job = (Job) viewHolder.toggleButton.getTag();
-                    int isFavorite = buttonView.isChecked() ? 1 : 0;
-                    job.setIsfavorite(isFavorite);
-                    dataAccessHelper = new DataAccessHelper(context);
-                    dataAccessHelper.changeIsfavorite(job, isFavorite);
+                public void onClick(View buttonView) {
+                    Job job = (Job) viewHolder.imageButton.getTag();
+                    if (job.getIsfavorite() == 1) {
+                        job.setIsfavorite(0);
+                        dataAccessHelper = new DataAccessHelper(context);
+                        dataAccessHelper.changeIsfavorite(job, 0);
+                        viewHolder.imageButton.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    } else {
+                        job.setIsfavorite(1);
+                        dataAccessHelper = new DataAccessHelper(context);
+                        dataAccessHelper.changeIsfavorite(job, 1);
+                        viewHolder.imageButton.setImageResource(R.drawable.ic_star_yellow_24dp);
+                    }
+
                     //if(isChecked)
                     //    Toast.makeText(getContext(), "checked"+ job.getPosition(), Toast.LENGTH_LONG).show();
                     //else if(!isChecked)
@@ -55,10 +65,10 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
                 }
             });
             view.setTag(viewHolder);
-            viewHolder.toggleButton.setTag(jobs.get(position));
+            viewHolder.imageButton.setTag(jobs.get(position));
         } else {
             view = convertView;
-            ((ViewHolder) view.getTag()).toggleButton.setTag(jobs.get(position));
+            ((ViewHolder) view.getTag()).imageButton.setTag(jobs.get(position));
         }
         ViewHolder holder = (ViewHolder) view.getTag();
         holder.text.setText(Html.fromHtml(jobs.get(position).toString()));
@@ -84,11 +94,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
             }
         });
         if (jobs.get(position).getIsfavorite() == 0)
-            holder.toggleButton.setChecked(false);
+            holder.imageButton.setImageResource(R.drawable.ic_star_border_black_24dp);
         else if (jobs.get(position).getIsfavorite() == 1)
-            holder.toggleButton.setChecked(true);
-        else
-            Toast.makeText(getContext(), "Custom Array Adapter IsFavorite problem", Toast.LENGTH_LONG).show();
+            holder.imageButton.setImageResource(R.drawable.ic_star_yellow_24dp);
         return view;
     }
 
@@ -96,18 +104,19 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
     private AlertDialog AskOption(final Job job) {
         AlertDialog myDeleteDialogBox = new AlertDialog.Builder(context)
                 //set message, title, and icon
-                .setTitle("Löschen")
-                .setMessage("Willst du diese Stellenanzeige wirklich löschen?")
+                .setTitle(R.string.delete)
+                .setMessage(R.string.ask_delete)
                 .setIcon(R.drawable.ic_delete_black_24dp)
 
-                .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        dataAccessHelper = new DataAccessHelper(context);
                         dataAccessHelper.deleteJob(job);
                         dialog.dismiss();
                     }
 
                 })
-                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }

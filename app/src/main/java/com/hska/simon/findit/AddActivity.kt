@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.*
 import com.hska.simon.findit.database.DataAccessHelper
 import com.hska.simon.findit.model.Job
@@ -37,13 +39,17 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
         setSupportActionBar(toolbar)
+        var window: Window = this.window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = this.resources.getColor(R.color.colorPrimaryDark)
 
         var spinner: Spinner = findViewById(R.id.spinner1)
         var adapter: ArrayAdapter<CharSequence> =
             ArrayAdapter.createFromResource(this, R.array.job_types, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.setAdapter(adapter)
-        spinner.setOnItemSelectedListener(this)
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = this
 
         val companyTextField: EditText = findViewById(R.id.companyTextField)
         val positionTextField: EditText = findViewById(R.id.positionTextField)
@@ -56,17 +62,17 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val intent = Intent()
             intent.type = "application/pdf"
             intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select file"), 1)
+            startActivityForResult(Intent.createChooser(intent, R.string.choose_pdf.toString()), 1)
 
         }
 
         saveButton.setOnClickListener { view ->
 
-            dataAccessHelper = DataAccessHelper(getApplicationContext())
-            var type: Int = spinner.getSelectedItemId().toInt()
-            var company: String = companyTextField.getText().toString()
-            var position: String = positionTextField.getText().toString()
-            var description: String = descriptionTextField.getText().toString()
+            dataAccessHelper = DataAccessHelper(applicationContext)
+            var type: Int = spinner.selectedItemId.toInt()
+            var company: String = companyTextField.text.toString()
+            var position: String = positionTextField.text.toString()
+            var description: String = descriptionTextField.text.toString()
 
             dataAccessHelper?.addJob(Job(type, company, position, description, 0, encodedString))
             setResult(1)

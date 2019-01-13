@@ -1,6 +1,5 @@
 package com.hska.simon.findit
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -13,7 +12,6 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.SearchView
-import android.widget.Toast
 import com.hska.simon.findit.database.DataAccessHelper
 import com.hska.simon.findit.model.Job
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        setTitle(R.string.favorites)
 
         addbtn.setOnClickListener { view ->
             val intent = Intent(this, AddActivity::class.java)
@@ -42,6 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+        drawer_layout.openDrawer(Gravity.START)
 
         nav_view.setNavigationItemSelectedListener(this)
         if (currentNavItem == null)
@@ -67,11 +67,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
                 loadDataFromDatabase(newText)
-                if(jobs?.size == 0){
-                    var arrayAdapterEmpty= ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1)
-                    arrayAdapterEmpty.add("Keine Stellen gefunden")
+                if (jobs?.size == 0) {
+                    var arrayAdapterEmpty = ArrayAdapter<String>(this@MainActivity, android.R.layout.simple_list_item_1)
+                    arrayAdapterEmpty.add(getString(R.string.no_jobs_found))
                     val listView: ListView = findViewById(R.id.offerlist)
-                    listView.setAdapter(arrayAdapterEmpty)
+                    listView.adapter = arrayAdapterEmpty
                 }
                 return false
             }
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dataAccessHelper = DataAccessHelper(this)
         jobs = ArrayList()
         if (jobType == 99)
-            jobs = dataAccessHelper?.getAllFavorites()
+            jobs = dataAccessHelper?.allFavorites
         else
             jobs = dataAccessHelper?.getAllJobs(jobType)
         if (jobs?.size != 0) {
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         arrayAdapter = CustomArrayAdapter(this, jobs)
         val listView = findViewById<ListView>(R.id.offerlist)
-        listView.setAdapter(arrayAdapter)
+        listView.adapter = arrayAdapter
     }
 
     fun loadDataFromDatabase(keyword: String) {
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         arrayAdapter = CustomArrayAdapter(this, jobs)
         val listView = findViewById<ListView>(R.id.offerlist)
-        listView.setAdapter(arrayAdapter)
+        listView.adapter = arrayAdapter
     }
 
 //    @Override
@@ -137,26 +137,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_favorites -> {
+                setTitle(R.string.favorites)
                 loadDataFromDatabase(99)
                 currentNavItem = 99
             }
-            R.id.nav_working_student -> {
+            R.id.nav_working_student_jobs -> {
+                setTitle(R.string.working_student_jobs)
                 loadDataFromDatabase(0)
                 currentNavItem = 0
             }
-            R.id.nav_internship -> {
+            R.id.nav_internships -> {
+                setTitle(R.string.internships)
                 loadDataFromDatabase(1)
                 currentNavItem = 1
             }
             R.id.nav_thesis -> {
+                setTitle(R.string.thesis)
                 loadDataFromDatabase(2)
                 currentNavItem = 2
             }
             R.id.nav_settings -> {
-
+                setTitle(R.string.settings)
             }
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

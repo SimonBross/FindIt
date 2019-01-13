@@ -12,13 +12,13 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Firma"
+            android:text="@string/company"
             android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp" android:id="@+id/textView5"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Position"
+            android:text="@string/position"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:id="@+id/textView4"
             android:layout_marginTop="8dp"
@@ -26,19 +26,21 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="17dp"
-            android:text="Stellenbeschreibung"
+            android:text="@string/job_description"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/positionTextField" android:id="@+id/textView6"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"/>
     <Spinner
             android:id="@+id/spinner1"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="@+id/positionTextField"
             android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             app:layout_constraintStart_toEndOf="@+id/positionTextField"
             app:layout_constraintBottom_toBottomOf="@+id/positionTextField"
-            app:layout_constraintTop_toTopOf="@+id/positionTextField" app:layout_constraintVertical_bias="0.481"/>
+            app:layout_constraintTop_toTopOf="@+id/positionTextField" app:layout_constraintVertical_bias="0.481"
+    />
     <EditText
             android:id="@+id/companyTextField"
             android:layout_width="wrap_content"
@@ -67,7 +69,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
     <Button
             android:id="@+id/pdfButton"
-            android:text="PDF auswählen"
+            android:text="@string/choose_pdf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

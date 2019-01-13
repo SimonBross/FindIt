@@ -105,6 +105,6 @@ public class Job {
 
     @Override
     public String toString() {
-        return "<b>" + company + "</b><br>" + position + "<br>" + description;
+        return "<b>" + company + "</b><br>" + position;
     }
 }

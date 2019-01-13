@@ -8,24 +8,24 @@
         <item
                 android:id="@+id/nav_favorites"
                 android:icon="@drawable/ic_star_black_24dp"
-                android:title="Favoriten"
+                android:title="@string/favorites"
                 android:checked="true"/>
     </group>
 
     <group android:id="@+id/menu_middle"
            android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_working_student"
+                android:id="@+id/nav_working_student_jobs"
                 android:icon="@drawable/ic_laptop_black_24dp"
-                android:title="Werkstudententätigkeit"/>
+                android:title="@string/working_student_jobs"/>
         <item
-                android:id="@+id/nav_internship"
+                android:id="@+id/nav_internships"
                 android:icon="@drawable/ic_location_city_black_24dp"
-                android:title="Praktikum"/>
+                android:title="@string/internships"/>
         <item
                 android:id="@+id/nav_thesis"
                 android:icon="@drawable/ic_school_black_24dp"
-                android:title="Thesis"/>
+                android:title="@string/thesis"/>
     </group>
 
     <group android:id="@+id/menu_bottom"

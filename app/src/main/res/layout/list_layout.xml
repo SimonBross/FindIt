@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent" android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/listTextView"
               android:clickable="true"
               android:focusable="true"
-              android:layout_width="308dp"
+              android:layout_width="280dp"
               android:layout_height="wrap_content"
               android:textAppearance="?android:attr/textAppearanceListItemSmall"
               android:gravity="center_vertical"
               android:paddingStart="?android:attr/listPreferredItemPaddingStart"
               android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-              android:minHeight="?android:attr/listPreferredItemHeightSmall" android:layout_alignParentEnd="true"
-              android:layout_alignParentTop="true" android:layout_marginTop="20dp"/>
+              android:minHeight="?android:attr/listPreferredItemHeightSmall"
+              android:layout_alignParentTop="true" android:layout_marginTop="15dp" android:layout_marginBottom="15dp"
+              android:layout_alignParentStart="true" android:layout_marginStart="15dp"/>
 
-    <ToggleButton
-            android:layout_width="50dp"
+    <ImageButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/myToggleButton"
+            android:gravity="center_vertical"
+            android:id="@+id/myImageButton"
             app:layout_constraintStart_toEndOf="@id/listTextView"
-            android:textOn="Favorit"
-            android:textOff="Kein Favorit"
-            android:layout_alignParentTop="true"/>
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:padding="0dp"
+            android:background="#33FFFFFF"
+            android:scaleType="fitCenter"
+            android:layout_alignTop="@+id/listTextView"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="0dp" android:layout_toEndOf="@+id/listTextView"/>
+
 
 </RelativeLayout>

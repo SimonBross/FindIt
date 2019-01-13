@@ -2,17 +2,37 @@
     <string name="app_name">FindIt</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    --- Navigation Drawer ---
     <string name="nav_header_title">Max Mustermann</string>
     <string name="nav_header_subtitle">max.mustermann@ebusiness.de</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_add">Stellenanzeige erstellen</string>
+    <string name="favorites">Favoriten</string>
+    <string name="working_student_jobs">Werkstudententätigkeiten</string>
+    <string name="internships">Praktika</string>
+    <string name="thesis">Thesen</string>
+    <string name="settings">Einstellungen</string>
 
+    --- Add Activity ---
+    <string name="title_activity_add">Stellenanzeige erstellen</string>
+    <string name="company">Firma</string>
+    <string name="position">Position</string>
+    <string name="job_description">Stellenbeschreibung</string>
+    <string name="choose_pdf">PDF auswählen</string>
     <string-array name="job_types">
         <item>Werkstudententätigkeit</item>
         <item>Praktikum</item>
         <item>Thesis</item>
     </string-array>
-    <string name="title_activity_maps">Map</string>
 
+    --- Delete ---
+    <string name="delete">Löschen</string>
+    <string name="ask_delete">Willst du diese Stellenanzeige wirklich löschen?</string>
+    <string name="cancel">Abbrechen</string>
+
+    --- Search Bar ---
+    <string name="no_jobs_found">Keine Stellen gefunden</string>
+
+    --- Maps Activity ---
+    <string name="title_activity_maps">Map</string>
 </resources>
