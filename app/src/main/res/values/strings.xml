@@ -36,4 +36,8 @@
     --- Maps Activity ---
     <string name="title_activity_maps">Map</string>
     <string name="address_not_found">Adresse konnte nicht gefunden werden</string>
+
+    --- Internet Connection ---
+    <string name="no_connection">Keine Internetverbindung</string>
+    <string name="open_settings">Einstellungen</string>
 </resources>

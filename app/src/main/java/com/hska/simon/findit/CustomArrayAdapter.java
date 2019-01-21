@@ -82,8 +82,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Job> {
             public void onClick(View v) {
                 if (isNetworkAvailable() == false) {
                     Snackbar snackbar = Snackbar
-                            .make(v, "Internet connection is off", Snackbar.LENGTH_LONG)
-                            .setAction("Turn On", new View.OnClickListener() {
+                            .make(v, R.string.no_connection, Snackbar.LENGTH_LONG)
+                            .setAction(R.string.open_settings, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     Intent wirelessIntent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
